@@ -21,6 +21,8 @@ export default {
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap";
 #app {
+  width: 100%;
+  height: 100vh;
   background-color: #1E2D3B;
 }
 </style>
