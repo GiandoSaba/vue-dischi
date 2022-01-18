@@ -1,27 +1,22 @@
 <template>
   <main class="container pb-4">
-    <div class="row" v-if="albums">
-      <div class="col-6">
-        <select v-model="selected" @change="changeChoice()">
-          <option>All</option>
-          <option
-            v-for="(genre, index) in genres"
-            :key="index + 'Genre'"
-            :value="genre"
-          >
-            {{ genre }}
-          </option>
-        </select>
+    <div class="container" v-if="albums">
+      <div class="row">
+        <Select
+          :type="'Genere'"
+          :array="genres"
+          @changeValue="changeChoice($event)"
+        />
+      </div>
+      <div class="row row-cols-6 gap-3">
+        <Album
+          v-for="(album, index) in filteredAlbums"
+          :key="index"
+          :album="album"
+        />
       </div>
     </div>
-    <div class="row row-cols-6 gap-3" v-if="albums">
-      <Album
-        v-for="(album, index) in filteredAlbums"
-        :key="index"
-        :album="album"
-      />
-    </div>
-    <div class="row loading" v-else>
+    <div class="row text-center text-white" v-else>
       <div class="col-12">
         <h1>Loading...</h1>
       </div>
@@ -32,18 +27,20 @@
 <script>
 import axios from "axios";
 import Album from "./Album.vue";
+import Select from "./Select.vue";
 
 export default {
   name: "Main",
   components: {
     Album,
+    Select,
   },
   data() {
     return {
       albums: null,
       filteredAlbums: null,
       genres: null,
-      selected: null,
+      selected: "All",
       queryApi: "https://flynn.boolean.careers/exercises/api/array/music",
     };
   },
@@ -75,7 +72,8 @@ export default {
       }
       this.genres = genresArray;
     },
-    changeChoice() {
+    changeChoice(selected) {
+      this.selected = selected;
       if (this.selected == "" || this.selected == "All") {
         this.filteredAlbums = this.albums;
       } else {
@@ -88,9 +86,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.loading {
-  text-align: center;
-  color: white;
-}
-</style>
+<style scoped lang="scss"></style>
