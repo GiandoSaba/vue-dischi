@@ -30,9 +30,6 @@ export default {
     };
   },
   methods: {
-    changeSelect() {
-      this.$emit("changeValue", this.selected);
-    },
   },
 };
 </script>

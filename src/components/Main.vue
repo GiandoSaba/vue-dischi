@@ -5,7 +5,12 @@
         <Select
           :type="'Genere'"
           :array="genres"
-          @changeValue="changeChoice($event)"
+          @changeValue="changeGenre($event)"
+        />
+        <Select
+          :type="'Artista'"
+          :array="artists"
+          @changeValue="changeArtist($event)"
         />
       </div>
       <div class="row row-cols-6 gap-3">
@@ -40,6 +45,7 @@ export default {
       albums: null,
       filteredAlbums: null,
       genres: null,
+      artists: null,
       selected: "All",
       queryApi: "https://flynn.boolean.careers/exercises/api/array/music",
     };
@@ -55,6 +61,7 @@ export default {
           .then((result) => {
             this.albums = result.data.response;
             this.getGenre();
+            this.getArtists();
             this.filteredAlbums = this.albums;
           })
           .catch((error) => {
@@ -72,13 +79,33 @@ export default {
       }
       this.genres = genresArray;
     },
-    changeChoice(selected) {
+    getArtists() {
+      const artistsArray = [];
+      for (let i = 0; i < this.albums.length; i++) {
+        const element = this.albums[i];
+        while (!artistsArray.includes(element.author)) {
+          artistsArray.push(element.author);
+        }
+      }
+      this.artists = artistsArray;
+    },
+    changeGenre(selected) {
       this.selected = selected;
       if (this.selected == "" || this.selected == "All") {
         this.filteredAlbums = this.albums;
       } else {
         this.filteredAlbums = this.albums.filter((album) => {
           return album.genre == this.selected;
+        });
+      }
+    },
+    changeArtist(selected) {
+      this.selected = selected;
+      if (this.selected == "" || this.selected == "All") {
+        this.filteredAlbums = this.albums;
+      } else {
+        this.filteredAlbums = this.albums.filter((album) => {
+          return album.author == this.selected;
         });
       }
     },
