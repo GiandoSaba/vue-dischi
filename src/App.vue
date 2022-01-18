@@ -6,23 +6,22 @@
 </template>
 
 <script>
-import Header from './components/Header.vue'
-import Main from './components/Main.vue'
+import Header from "./components/Header.vue";
+import Main from "./components/Main.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Header,
     Main,
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
 @import "~bootstrap/scss/bootstrap";
 #app {
-  width: 100%;
   height: 100vh;
-  background-color: #1E2D3B;
+  background-color: #1e2d3b;
 }
 </style>
